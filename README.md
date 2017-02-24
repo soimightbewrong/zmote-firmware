@@ -12,4 +12,6 @@ This build instructions have been testetd with Lubuntu 16.04.2 LTS (64Bit):
 
 3. Clone the repro (git clone https://github.com/1500WK1500/zmote-firmware.git)
 
-3. Run make
+4. Edit paths in buildconfig.mk
+
+5. Run make
