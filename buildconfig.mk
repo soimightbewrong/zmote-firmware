@@ -2,21 +2,21 @@
 
 ZMOTE_FIRMWARE_VERSION = "\"0.6.0\""
 
-ESP_DEV_HOME = $(abspath $(PWD)/../zmote-toolchain)
+ESP_DEV_HOME = $(abspath $(PWD)/..)
 
-ESPTOOL2      ?= $(PWD)/rboot/esptool2/esptool2.exe
+ESPTOOL2      ?= $(PWD)/rboot/esptool2/esptool2
 FW_SECTS      = .text .data .rodata
 FW_USER_ARGS  = -quiet -bin -boot2
 
-SDK_BASE      ?= $(ESP_DEV_HOME)/esp_iot_sdk_v1.5.0
+SDK_BASE      ?= /home/lubuntu/opt/esp-open-sdk/sdk
 
-XTENSA_TOOLS_ROOT ?= $(ESP_DEV_HOME)/xtensa-lx106-elf/bin
+XTENSA_TOOLS_ROOT ?= /home/lubuntu/opt/esp-open-sdk/xtensa-lx106-elf/bin
 
-ESPTOOL ?= $(ESP_DEV_HOME)/bin/esptool.py
-ESPPORT ?= COM5
-ESPBAUD ?= 921600
+#ESPTOOL ?= $(ESP_DEV_HOME)/bin/esptool.py
+#ESPPORT ?= COM5
+#ESPBAUD ?= 921600
 
-PYTHON ?= /c/Python27/python.exe
+#PYTHON ?= /c/Python27/python.exe
 
 # If GZIP_COMPRESSION is set to "yes" then the static css, js, and html files will be compressed with gzip before added to the espfs image
 # and will be served with gzip Content-Encoding header.
@@ -50,12 +50,12 @@ WEB_DIR ?= ./html
 
 CFLAGS = -DZMOTE_CFG_SECTOR=0x80 -DUSE_US_TIMER -DZMOTE_FIRMWARE_VERSION=$(ZMOTE_FIRMWARE_VERSION) -DZMOTE_FIRMWARE_COMMIT="\"$(shell git log | head -1 | awk '{print $$2}')\"" 
 
-ifeq ($(BUILD), nodemcu)
-	CFLAGS += -DINVERT_IR_TX -DENABLE_UART_DEBUG -DZMOTE_FIRMWARE_BUILD=\"nodemcu\"
-else
-	CFLAGS += -DZMOTE_FIRMWARE_BUILD=\"v1hw\"  -DUART_TX_AS_STLED
-endif
 
-ZLIB_CFLAGS = -I$(PWD)/../../zmote-toolchain/zlib/include
-ZLIB_LFLAGS = -L$(PWD)/../../zmote-toolchain/zlib/lib -lz
+CFLAGS += -DENABLE_UART_DEBUG -DZMOTE_FIRMWARE_BUILD=\"nodemcu\" -include /home/lubuntu/opt/esp-open-sdk/sdk/include/c_types.h.orig 
+
+#CFLAGS += -DZMOTE_FIRMWARE_BUILD=\"v1hw\"  -DUART_TX_AS_STLED
+
+
+#ZLIB_CFLAGS = -I$(PWD)/../../zmote-toolchain/zlib/include
+#ZLIB_LFLAGS = -L$(PWD)/../../zmote-toolchain/zlib/lib -lz
 
