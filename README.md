@@ -8,7 +8,7 @@ This build instructions have been testetd with Lubuntu 16.04.2 LTS (64Bit):
 
 1. Install esp-open-sdk (https://github.com/pfalcon/esp-open-sdk)
 
-2. Install npm and nodejs-legacy (sudo apt-get install npm nodejs-legacy)
+2. Install npm, nodejs and nodejs-legacy (sudo apt-get install npm nodejs nodejs-legacy)
 
 3. Clone the repository (git clone https://github.com/1500WK1500/zmote-firmware.git)
 
