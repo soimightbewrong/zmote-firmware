@@ -10,7 +10,7 @@ This build instructions have been testetd with Lubuntu 16.04.2 LTS (64Bit):
 
 2. Install npm and nodejs-legacy (sudo apt-get install npm nodejs-legacy)
 
-3. Clone the repro (git clone https://github.com/1500WK1500/zmote-firmware.git)
+3. Clone the repository (git clone https://github.com/1500WK1500/zmote-firmware.git)
 
 4. Edit paths in buildconfig.mk
 
