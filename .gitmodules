@@ -9,7 +9,7 @@
 	url = https://github.com/zmoteio/zmote-dbmodels.git
 [submodule "frontend"]
 	path = frontend
-	url = git@bitbucket.org:klarsys/zmote-frontend.git
+	url = https://bitbucket.org/klarsys/zmote-frontend.git	
 [submodule "rboot"]
 	path = rboot
 	url = https://github.com/zmoteio/zmote-rboot.git
