@@ -2,21 +2,20 @@
 
 ZMOTE_FIRMWARE_VERSION = "\"0.6.0\""
 
-ESP_DEV_HOME = $(abspath $(PWD)/..)
+ESP_OPEN_SDK_ROOT = /home/lubuntu/opt/esp-open-sdk
 
 ESPTOOL2      ?= $(PWD)/rboot/esptool2/esptool2
 FW_SECTS      = .text .data .rodata
 FW_USER_ARGS  = -quiet -bin -boot2
 
-SDK_BASE      ?= /home/lubuntu/opt/esp-open-sdk/sdk
+SDK_BASE      ?= $(ESP_OPEN_SDK_ROOT)/sdk
 
-XTENSA_TOOLS_ROOT ?= /home/lubuntu/opt/esp-open-sdk/xtensa-lx106-elf/bin
+XTENSA_TOOLS_ROOT ?= $(ESP_OPEN_SDK_ROOT)/xtensa-lx106-elf/bin
 
-#ESPTOOL ?= $(ESP_DEV_HOME)/bin/esptool.py
-#ESPPORT ?= COM5
-#ESPBAUD ?= 921600
+export ESPTOOL ?= $(ESP_OPEN_SDK_ROOT)/esptool/esptool.py
+export ESPPORT ?= /dev/ttyUSB0
+export ESPBAUD ?= 1000000
 
-#PYTHON ?= /c/Python27/python.exe
 
 # If GZIP_COMPRESSION is set to "yes" then the static css, js, and html files will be compressed with gzip before added to the espfs image
 # and will be served with gzip Content-Encoding header.

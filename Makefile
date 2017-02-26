@@ -85,7 +85,7 @@ $1/%.o: %.c
 	$(Q) $(CC) $(INCDIR) $(MODULE_INCDIR) $(EXTRA_INCDIR) $(SDK_INCDIR) $(CFLAGS)  -c $$< -o $$@
 endef
 
-.PHONY: all checkdirs clean libesphttpd libmqtt rboot roms
+.PHONY: all checkdirs clean libesphttpd libmqtt rboot roms flash
 
 all: checkdirs $(ESPTOOL2) rboot $(ROM0) $(ROM1) $(FS_TAB) name_binaries
 roms: checkdirs $(ESPTOOL2) $(ROM0) $(ROM1)
@@ -164,6 +164,8 @@ upload_binaries: force
 		heroku config:set -a zmote OTA_SERVER_IP=$(GCE_IP) \
 				OTA_SERVER_PORT=2885 \
 				OTA_SERVER_PATH=$(ZMOTE_FW_VER_UNQUOTED)
+flash:
+	$(Q) ./flash.sh
 
 clean:
 	$(Q) make -C libesphttpd clean
