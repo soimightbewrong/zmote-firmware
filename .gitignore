@@ -12,3 +12,4 @@ npm-debug.log
 test/.client_auth
 test/*.bin
 *.bak
+tags
