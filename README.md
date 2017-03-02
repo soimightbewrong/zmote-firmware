@@ -4,7 +4,6 @@ This is a fork of https://github.com/zmoteio/zmote-firmware
 Firmware code and associated utilities for the zmote widget
 
 # build and flash instruction
-This build instructions have been testetd with Lubuntu 16.04.2 LTS (64Bit):
 
 1. Install esp-open-sdk (https://github.com/pfalcon/esp-open-sdk)
 
@@ -18,3 +17,9 @@ This build instructions have been testetd with Lubuntu 16.04.2 LTS (64Bit):
 
 6. Run "make flash"
 
+# tested enviroment
+This firmware has only been tested with a nodemcu v3 (ESP-12E).
+
+The build instructions have been testetd with Lubuntu 16.04.2 LTS (64Bit).
+
+However it should also work on other debian based systems.
