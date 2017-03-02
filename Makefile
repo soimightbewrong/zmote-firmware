@@ -149,8 +149,8 @@ name_binaries: force
 	$(Q) cp $(FW_BASE)/rboot.bin $(FW_BASE)/0x00000.bin && \
 		cp $(ROM0) $(FW_BASE)/0x02000.bin && \
 		cp $(ROM1) $(FW_BASE)/0x82000.bin && \
-		cp $(SDK_BASE)/bin/esp_init_data_default.bin $(FW_BASE)/0xFC000.bin && \
-		cp $(SDK_BASE)/bin/blank.bin $(FW_BASE)/0xFE000.bin && \
+		cp $(SDK_BASE)/bin/esp_init_data_default.bin $(FW_BASE)/0x3FC000.bin && \
+		cp $(SDK_BASE)/bin/blank.bin $(FW_BASE)/0x3FE000.bin && \
 		echo "{\"version\":$(ZMOTE_FIRMWARE_VERSION)}" > $(FW_BASE)/zmote-firmware.json
 
 	$(Q) if test -f 0xFC000.bin; then cp -v 0xFC000.bin $(FW_BASE)/; fi
