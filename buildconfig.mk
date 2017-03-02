@@ -12,6 +12,8 @@ SDK_BASE      ?= $(ESP_OPEN_SDK_ROOT)/sdk
 
 XTENSA_TOOLS_ROOT ?= $(ESP_OPEN_SDK_ROOT)/xtensa-lx106-elf/bin
 
+CFG_SECTOR ?= 0x80
+
 export ESPTOOL ?= $(ESP_OPEN_SDK_ROOT)/esptool/esptool.py
 export ESPPORT ?= /dev/ttyUSB0
 export ESPBAUD ?= 1000000
@@ -47,7 +49,7 @@ SHOW_HEAP_USE ?= yes
 
 WEB_DIR ?= ./html
 
-CFLAGS = -DZMOTE_CFG_SECTOR=0x80 -DUSE_US_TIMER -DZMOTE_FIRMWARE_VERSION=$(ZMOTE_FIRMWARE_VERSION) -DZMOTE_FIRMWARE_COMMIT="\"$(shell git log | head -1 | awk '{print $$2}')\"" 
+CFLAGS = -DZMOTE_CFG_SECTOR=$(CFG_SECTOR) -DUSE_US_TIMER -DZMOTE_FIRMWARE_VERSION=$(ZMOTE_FIRMWARE_VERSION) -DZMOTE_FIRMWARE_COMMIT="\"$(shell git log | head -1 | awk '{print $$2}')\"" 
 
 
 CFLAGS += -DENABLE_UART_DEBUG -DZMOTE_FIRMWARE_BUILD=\"nodemcu\" -include /home/lubuntu/opt/esp-open-sdk/sdk/include/c_types.h.orig 

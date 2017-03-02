@@ -143,7 +143,7 @@ frontend/node_modules: frontend/package.json
 
 $(FS_TAB): $(FW_BASE) zfs/node_modules  frontend/node_modules force
 	$(Q) mkdir -p $(WEB_DIR) && cd frontend && ./node_modules/.bin/gulp widget-files $(GULP_SILENT)
-	$(Q) node zfs/zfs.js --outdir=$(FW_BASE) --fstab=$@ $(WEB_DIR)
+	$(Q) node zfs/zfs.js --outdir=$(FW_BASE) --fstab=$@ $(WEB_DIR) --cfgsector=$(CFG_SECTOR)
 
 name_binaries: force
 	$(Q) cp $(FW_BASE)/rboot.bin $(FW_BASE)/0x00000.bin && \

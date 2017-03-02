@@ -5,12 +5,14 @@ var argv = require('yargs')
 			.default('hole1', '0x48,56')
 			.default('hole2', '0xC8,52')
 			.default('fstab', "filesystem.json")
+			.default('cfgsector', 0x80)
 			.default('version', Date.now())
 			.argv;
 var fs = require('fs');
 var zlib = require('zlib');
 var mime = require('mime');
 var sprintf = require('sprintf-js').sprintf;
+var crc = require('crc');
 
 var fsTab = {};
 var fsConfig = {};
@@ -25,6 +27,23 @@ var fsChunks = readFS();
 var fsTab = allocFS(fsChunks);
 fsTab.fs_version = argv.version;
 fs.writeFileSync(argv.fstab, JSON.stringify(fsTab));
+createConfigBinary(JSON.stringify(fsTab));	//create the binary file for the cfg sectors (see zmote-firmware/user/rps.h for more information)
+function createConfigBinary(jsonString)
+{
+	var buf = new Buffer(4*1024,'ascii');	//Create 4KB Buffer for RPS Section
+	buf.fill(0xFF);				//Fill with 0xFF to indicate a deleted flash sector
+	buf.write(jsonString + "\0");		//Insert jsonString and terminate with "\0"
+	var crc32_sum = crc.crc32(buf.slice(0,buf.length - 4));	//last 4 Byte are used for CRC32 value and therefore not used for the CRC calculation
+	buf.writeUInt32LE(crc32_sum,buf.length - 4);	//write CRC32 value to the last 4 Bytes 
+	var fname1 = argv.outdir + "/0x" + argv.cfgsector.toString(16) + "000.bin";
+	var fname2 = argv.outdir + "/0x" + (argv.cfgsector+1).toString(16) + "000.bin";
+	console.log("File:"+fname1+" Length:"+buf.length);
+	fs.writeFileSync(fname1, buf);
+	console.log("File:"+fname2+" Length:"+buf.length);
+	fs.writeFileSync(fname2, buf); //this file is only for redundancy
+
+}
+
 
 function findFree() {
 	for (var i = 0; i < holes.length; i++) {
