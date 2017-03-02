@@ -17,6 +17,12 @@ Firmware code and associated utilities for the zmote widget
 
 6. Run "make flash"
 
+# hardware connection
+
+GPIO5 = IR_RX (TL1838)
+
+GPIO2 = IR_TX (IR LED)
+
 # tested enviroment
 This firmware has only been tested with a nodemcu v3 (ESP-12E).
 

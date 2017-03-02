@@ -8,7 +8,7 @@
 #include "zmote_config.h"
 
 #define TX_GPIO 2
-#define RX_GPIO 3
+#define RX_GPIO 5
 #define LED_GPIO 0
 
 #define DEBUG_IR_TX
@@ -652,7 +652,7 @@ void ICACHE_FLASH_ATTR irInit(void)
 	CreateMutux(&txMutex);
 	CreateMutux(&rxMutex);
 
-	PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0RXD_U, FUNC_GPIO3);
+	PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO5_U, FUNC_GPIO5);
 	PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO2_U, FUNC_GPIO2);
 	PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO0_U, FUNC_GPIO0);
 #ifdef INVERT_IR_TX
@@ -666,3 +666,4 @@ void ICACHE_FLASH_ATTR irInit(void)
 	ETS_GPIO_INTR_ENABLE();
 	rxMonitor(); // Kick off the monitor
 }
+
