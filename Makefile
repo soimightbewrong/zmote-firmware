@@ -94,6 +94,7 @@ roms: checkdirs $(ESPTOOL2) $(ROM0) $(ROM1)
 
 libesphttpd/Makefile libmqtt/Makefile rboot/Makefile:
 	$(Q) echo "Fetching submodules..."
+	$(Q) git submodule sync
 	$(Q) git submodule init
 	$(Q) git submodule update
 

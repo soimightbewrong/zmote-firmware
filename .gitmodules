@@ -1,6 +1,6 @@
 [submodule "libesphttpd"]
 	path = libesphttpd
-	url = https://github.com/zmoteio/libesphttpd.git
+	url = https://github.com/1500WK1500/libesphttpd.git
 [submodule "libmqtt"]
 	path = libmqtt
 	url = https://github.com/zmoteio/libmqtt.git
