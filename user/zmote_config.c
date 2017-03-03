@@ -255,7 +255,7 @@ int ICACHE_FLASH_ATTR cfgFile(HttpdConnData *connData)
 		ERROR("Flash read error");
 		goto err;
 	}
-	espconn_sent(connData->conn, (void *)fState->data, tLen);
+	httpdSend(connData, (void *)fState->data, tLen);
 	fState->accLen += tLen;
 	fState->offset += tLen;
 	if (fState->offset >= SPI_FLASH_SEC_SIZE) {
