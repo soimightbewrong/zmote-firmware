@@ -33,6 +33,7 @@ function createConfigBinary(jsonString)
 	var buf = new Buffer(4*1024,'ascii');	//Create 4KB Buffer for RPS Section
 	buf.fill(0xFF);				//Fill with 0xFF to indicate a deleted flash sector
 	buf.write(jsonString + "\0");		//Insert jsonString and terminate with "\0"
+	buf.writeUInt32LE(0x00000000,buf.length - 8);		//set sequence number to zero
 	var crc32_sum = crc.crc32(buf.slice(0,buf.length - 4));	//last 4 Byte are used for CRC32 value and therefore not used for the CRC calculation
 	buf.writeUInt32LE(crc32_sum,buf.length - 4);	//write CRC32 value to the last 4 Bytes 
 	var fname1 = argv.outdir + "/0x" + argv.cfgsector.toString(16) + "000.bin";
