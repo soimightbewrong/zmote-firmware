@@ -52,7 +52,7 @@ WEB_DIR ?= ./html
 CFLAGS = -DZMOTE_CFG_SECTOR=$(CFG_SECTOR) -DUSE_US_TIMER -DZMOTE_FIRMWARE_VERSION=$(ZMOTE_FIRMWARE_VERSION) -DZMOTE_FIRMWARE_COMMIT="\"$(shell git log | head -1 | awk '{print $$2}')\"" 
 
 
-CFLAGS += -DENABLE_UART_DEBUG -DZMOTE_FIRMWARE_BUILD=\"nodemcu\" -include /home/lubuntu/opt/esp-open-sdk/sdk/include/c_types.h.orig 
+CFLAGS += -DENABLE_UART_DEBUG -DZMOTE_FIRMWARE_BUILD=\"nodemcu\" 
 
 #CFLAGS += -DZMOTE_FIRMWARE_BUILD=\"v1hw\"  -DUART_TX_AS_STLED
 
