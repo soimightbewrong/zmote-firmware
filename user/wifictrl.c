@@ -267,7 +267,9 @@ int ICACHE_FLASH_ATTR wifiConnectionStatus(HttpdConnData *connData)
 
 static void ICACHE_FLASH_ATTR gotIPCb(void)
 {
-	mqttInit();
+	#ifdef ENABLE_MQTT
+		mqttInit();
+	#endif
 	itachInit();
 
 	if (newConnect) {

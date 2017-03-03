@@ -1,23 +1,32 @@
-# --------------- esphttpd config options ---------------
 
-ZMOTE_FIRMWARE_VERSION = "\"0.6.0\""
+# --------------- toolchain config options ---------------
+# this configs are needed to build the project with make
 
+#path to the root directory of the pfalcon esp-open-sdk
 ESP_OPEN_SDK_ROOT = /home/lubuntu/opt/esp-open-sdk
 
-ESPTOOL2      ?= $(PWD)/rboot/esptool2/esptool2
-FW_SECTS      = .text .data .rodata
-FW_USER_ARGS  = -quiet -bin -boot2
+#path to the espressif sdk root (tested version: ESP8266_NONOS_SDK_V2.0.0_16_08_10)
+SDK_BASE      ?= $(ESP_OPEN_SDK_ROOT)/sdk11
 
-SDK_BASE      ?= $(ESP_OPEN_SDK_ROOT)/sdk
-
+#path to the gcc binaries
 XTENSA_TOOLS_ROOT ?= $(ESP_OPEN_SDK_ROOT)/xtensa-lx106-elf/bin
 
-CFG_SECTOR ?= 0x80
-
+# --------------- esptool config options ---------------
+# this config is needed to flash the binaries to the esp8266 with "make flash"
 export ESPTOOL ?= $(ESP_OPEN_SDK_ROOT)/esptool/esptool.py
 export ESPPORT ?= /dev/ttyUSB0
 export ESPBAUD ?= 1000000
 
+#Version of the firmware
+ZMOTE_FIRMWARE_VERSION = "\"0.6.0\""
+
+#output path for the generated html page (html, css and js files)
+#default:  ./html
+WEB_DIR ?= ./html
+
+#start sector for the cfg storage on the flash
+#this sector and CFG_SECTOR+1 is used for rps storage (see ./user/rps.h for more information)
+CFG_SECTOR ?= 0x80
 
 # If GZIP_COMPRESSION is set to "yes" then the static css, js, and html files will be compressed with gzip before added to the espfs image
 # and will be served with gzip Content-Encoding header.
@@ -45,18 +54,21 @@ YUI-COMPRESSOR ?= /usr/bin/yui-compressor
 #any support in the browser.
 USE_HEATSHRINK ?= no
 
+#shows every minute the heap use of the esp8266 on the serial port
 SHOW_HEAP_USE ?= yes
 
-WEB_DIR ?= ./html
+#this are the default CFLAGS and should not be changed
+CFLAGS = -DZMOTE_CFG_SECTOR=$(CFG_SECTOR) -DUSE_US_TIMER -DZMOTE_FIRMWARE_VERSION=$(ZMOTE_FIRMWARE_VERSION) -DZMOTE_FIRMWARE_BUILD=\"nodemcu\" -DZMOTE_FIRMWARE_COMMIT="\"$(shell git log | head -1 | awk '{print $$2}')\"" 
 
-CFLAGS = -DZMOTE_CFG_SECTOR=$(CFG_SECTOR) -DUSE_US_TIMER -DZMOTE_FIRMWARE_VERSION=$(ZMOTE_FIRMWARE_VERSION) -DZMOTE_FIRMWARE_COMMIT="\"$(shell git log | head -1 | awk '{print $$2}')\"" 
+#this are optional CFLAGS comment out or in as required
+CFLAGS += -DENABLE_UART_DEBUG
+#CFLAGS += -DUART_TX_AS_STLED
+#FLAGS += -DENABLE_MQTT
 
 
-CFLAGS += -DENABLE_UART_DEBUG -DZMOTE_FIRMWARE_BUILD=\"nodemcu\" 
-
-#CFLAGS += -DZMOTE_FIRMWARE_BUILD=\"v1hw\"  -DUART_TX_AS_STLED
-
-
-#ZLIB_CFLAGS = -I$(PWD)/../../zmote-toolchain/zlib/include
-#ZLIB_LFLAGS = -L$(PWD)/../../zmote-toolchain/zlib/lib -lz
+# --------------- ESPTOOL2 config options ---------------
+#this options should normaly not be changed
+ESPTOOL2      ?= $(PWD)/rboot/esptool2/esptool2
+FW_SECTS      = .text .data .rodata
+FW_USER_ARGS  = -quiet -bin -boot2
 
