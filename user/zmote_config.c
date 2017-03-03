@@ -224,10 +224,18 @@ int ICACHE_FLASH_ATTR cfgFile(HttpdConnData *connData)
 					INFO("Headers complete");
 					break;
 				}
-				httpdHeader(connData, jsonStr(cfg, &cfgToks[i+j+3], hdrKey), 
-					jsonStr(cfg, &cfgToks[i+j+4], hdrVal));
+				jsonStr(cfg, &cfgToks[i+j+3], hdrKey);
+				jsonStr(cfg, &cfgToks[i+j+4], hdrVal);
+
 				if (!os_strcmp(hdrKey, "Content-Length"))
+				{
 					fState->length = atoi(hdrVal);
+				}
+				else
+				{
+					httpdHeader(connData, jsonStr(cfg, &cfgToks[i+j+3], hdrKey),
+                                        jsonStr(cfg, &cfgToks[i+j+4], hdrVal));
+				}
 			}
 			httpdEndHeaders(connData);
 			fState->fileIdx = i;
@@ -244,14 +252,16 @@ int ICACHE_FLASH_ATTR cfgFile(HttpdConnData *connData)
 	if (fState->done)
 		goto err; 
 	int tLen = SPI_FLASH_SEC_SIZE - fState->offset;
+	int rLen;
 	if (tLen > MAX_SEND_CHUNK)
 		tLen = MAX_SEND_CHUNK;
 	if (fState->accLen + tLen > fState->length)
 		tLen = fState->length - fState->accLen;
+	rLen = tLen;
 	if (tLen&3)
-		tLen += 4 - (tLen&3); // Read only a multiple of 4 bytes
+		rLen = tLen + 4 - (tLen&3); // Read only a multiple of 4 bytes
 	DEBUG("fs_flash_read (%x, %d)", fState->sec*SPI_FLASH_SEC_SIZE + fState->offset, tLen);
-	if (spi_flash_read(fState->sec*SPI_FLASH_SEC_SIZE + fState->offset, fState->data, tLen) != SPI_FLASH_RESULT_OK) {
+	if (spi_flash_read(fState->sec*SPI_FLASH_SEC_SIZE + fState->offset, fState->data, rLen) != SPI_FLASH_RESULT_OK) {
 		ERROR("Flash read error");
 		goto err;
 	}
