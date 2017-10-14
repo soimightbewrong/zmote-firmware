@@ -7,10 +7,11 @@
 #include "mqttclient.h"
 #include "zmote_config.h"
 
-#define TX_GPIO 2
+#define TX_GPIO 0
 #define RX_GPIO 5
 #define LED_GPIO 0
 
+#define INVERT_IR_TX
 #define DEBUG_IR_TX
 enum {
 	RPT_COUNT,
