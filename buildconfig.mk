@@ -3,10 +3,10 @@
 # this configs are needed to build the project with make
 
 #path to the root directory of the pfalcon esp-open-sdk
-ESP_OPEN_SDK_ROOT = /home/lubuntu/opt/esp-open-sdk
+ESP_OPEN_SDK_ROOT = $(HOME)/git/esp-open-sdk
 
 #path to the espressif sdk root (tested version: ESP8266_NONOS_SDK_V2.0.0_16_08_10)
-SDK_BASE      ?= $(ESP_OPEN_SDK_ROOT)/sdk11
+SDK_BASE      ?= $(ESP_OPEN_SDK_ROOT)/sdk
 
 #path to the gcc binaries
 XTENSA_TOOLS_ROOT ?= $(ESP_OPEN_SDK_ROOT)/xtensa-lx106-elf/bin
